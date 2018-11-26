@@ -1,0 +1,74 @@
+/*共用样式 */
+html,body{
+    height:100%;
+}
+body{
+    background:pink;
+}
+
+.container{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+}
+
+.jay-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    height:50px;
+    border-bottom:1px solid black;
+    padding:0 30px;
+    .logo{
+        font-size:26px;
+        text-decoration:none;
+    }
+    .right{
+        display:flex;
+        align-items:center;
+        p{
+            margin-right:5px;
+        }
+    }
+}
+
+.jay-main{ 
+    flex:1;
+    display:flex;
+    background:white;
+    .jay-menu{
+        width:250px;
+        height:100%;    
+        border-right:1px solid black;
+        li{
+            list-style:none;
+            height:50px;
+            line-height:50px;
+            border-bottom:1px solid black;
+            text-align:center;
+        }
+    }
+    .body{
+        flex:1;
+        padding: 20px 20px;
+    }
+}
+
+
+.jay-foot{
+    height:50px;
+    border-top:1px solid black;
+    display:flex;
+    align-items:center;
+    padding:0 30px;
+}
+
+
+//以下是对bootstrap的修改
+.table-hover>tbody>tr:hover {
+  background-color: #05f31f;
+}
+
+.pagination {
+  float: right;
+}
