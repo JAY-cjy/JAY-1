@@ -40,12 +40,12 @@ router.get('/', function (req, res, next) {
   });
   // res.render('users'); 
   //这里不能写了，因为mongodb的操作时异步操作，
-  //写这个可能会出现这先运行的可能，然后就运行下面得了
+  //写这个可能会出现这先运行的可能，然后其他的就停止了
 });
 
 
 //登录操作 location:3000/users/login
-router.post('login', function (req, res) {
+router.post('/login', function (req, res) {
   //1.获取前端传递过来的参数
   var username = req.body.name;
   var password = req.body.pwd;
@@ -77,9 +77,83 @@ router.post('login', function (req, res) {
       });
       return;
     }
+    var db = client.db('JAY-project');
+
+    db.collection('user').find({
+      username: username,
+      password: password
+    }).toArray(function (err, data) {
+      if (err) {
+        console.log('查询失败', err);
+        res.render('error', {
+          message: '查询失败',
+          error: err
+        })
+      } else if (data.length <= 0) {
+        //没找到哦，登录失败
+        res.render('error', {
+          message: '登录失败',
+          error: new Error('用户不存在')
+          //error页面需要error.status,这个没有，所以我们自己new一个
+        })
+      } else {
+        //找到数据，登陆成功-跳转到首页
+        res.cookie('nickname', data[0].nickname, {
+          maxAge: 60 * 60 * 1000
+        });
+        //设置nickname，maxAge是cookie存在时间(时间毫秒数)
+        //res.render('index')不会改变页面地址,所以用redirect重定向
+        res.redirect('/');//res.redirect('http://localhost:3000/')主页
+      }
+      client.close();
+    })
+  })
+});
+
+
+//注册操作 localhost:3000/register.html
+router.post('/register', function (req, res) {
+  var name = req.body.name;
+  var pwd = req.body.pwd;
+  var nickname = req.body.nickname;
+  var age = req.body.age;
+  var sex = req.body.sex;
+  var isAdmin = req.body.isAdmin === '是' ? true : false;
+  //console.log(name, pwd, nickname,age, sex, isAdmin);
+
+  //插入数据库
+  MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
+    if (err) {
+      res.render('error', {
+        message: '连接失败',
+        error: err
+      })
+    }
+    return;
   })
 
+  var db = client.db('JAY-project');
+  db.collection('user').insertOne({
+    username: name,
+    password: pwd,
+    nickname: nickname,
+    age: age,
+    sex: sex,
+    inAdmin: inAdmin
+  }, function (err) {
+    if (err) {
+      console.log('注册失败');
+      res.render('error', {
+        message: '注册失败',
+        error: err
+      })
+    } else {
+      //注册成功 跳转到登录页面
+      res.redirect('/login.html');
+    }
+    client.close();
+  })
+})
 
-});
 
 module.exports = router;

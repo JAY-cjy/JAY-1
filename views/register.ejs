@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>xx后台管理系统</title>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <form action="/users/register" method="post">
+            <label>
+                <span>用户名:</span>
+                <input type="text" name="name" placeholder="请输入用户名">
+            </label>
+            <label>
+                <span>密码:</span>
+                <input type="password" name="pwd" placeholder="请输入密码">
+            </label>
+            <label>
+                <span>昵称:</span>
+                <input type="text" name="nickname" placeholder="请输入昵称">
+            </label>
+            <label>
+                <span>年龄:</span>
+                <input type="text" name="age" placeholder="请输入年龄">
+            </label>
+            <label>
+                <span>性别:</span>
+                <input type="radio" name="sex" value="男" checked>男
+                <input type="radio" name="sex" value="女">女
+            </label>
+            <label>
+                <span>管理员:</span>
+                <input type="radio" name="isAdmin" value="是" checked>是
+                <input type="radio" name="isAdmin" value="否">否
+            </label>
+            <input type="submit" value="注册">
+
+            <a href="/login.html">已有账号，点此立即登录</a>
+        </form>
+    </div>
+</body>
+
+</html>

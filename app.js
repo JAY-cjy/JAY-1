@@ -21,20 +21,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//调用自定义的中间件函数，用来判断用户是否登录
+
+//自己实现的中间件函数，用来实现判断用户是否登录(通过cookie里面的nickname)
 app.use(function (req, res, next) {
-  //排除登录和注册页面
+  //获取cookie的方法
+  //req.get('Cookie')是字符串
+  //console.log(req.cookies.nickname);//中间件cookieParser的方法
   if (ignoreRouter.indexOf(req.url) > -1) {
     next();
     return;
-  }
+  }//忽略登录注册和登录注册操作页面
 
   var nickname = req.cookies.nickname;
-
-
-  next();
-
-})
+  if (nickname) {
+    next();
+  } else {
+    //如果nickname不存在，就跳转到登录页面
+    res.redirect('/login.html')
+  }
+});
 
 
 app.use('/', indexRouter);
