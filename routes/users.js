@@ -1,5 +1,6 @@
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
+var async = require('async');
 
 var router = express.Router();
 var url = 'mongodb://127.0.0.1:27017';
@@ -50,6 +51,7 @@ router.post('/login', function (req, res) {
   var username = req.body.name;
   var password = req.body.pwd;
 
+
   //2.验证参数的有效性
   if (!username) {
     res.render('error', {
@@ -66,6 +68,7 @@ router.post('/login', function (req, res) {
     })
     return;
   }
+
 
   //3.连接数据库做验证
   MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
@@ -116,7 +119,7 @@ router.post('/register', function (req, res) {
   var name = req.body.name;
   var pwd = req.body.pwd;
   var nickname = req.body.nickname;
-  var age = req.body.age;
+  var age = parseInt(req.body.age);
   var sex = req.body.sex;
   var isAdmin = req.body.isAdmin === '是' ? true : false;
   //console.log(name, pwd, nickname,age, sex, isAdmin);
@@ -128,30 +131,71 @@ router.post('/register', function (req, res) {
         message: '连接失败',
         error: err
       })
+      return;
     }
-    return;
-  })
+    var db = client.db('JAY-project');
 
-  var db = client.db('JAY-project');
-  db.collection('user').insertOne({
-    username: name,
-    password: pwd,
-    nickname: nickname,
-    age: age,
-    sex: sex,
-    inAdmin: inAdmin
-  }, function (err) {
-    if (err) {
-      console.log('注册失败');
-      res.render('error', {
-        message: '注册失败',
-        error: err
-      })
-    } else {
-      //注册成功 跳转到登录页面
-      res.redirect('/login.html');
-    }
-    client.close();
+    async.series([
+      function (cb) {
+        db.collection('user').find({ username: name }).count(function (err, num) {
+          if (err) {
+            cb(err);
+          } else if (num > 0) {
+            //这个人已经注册过了
+            cb(new Error('已经注册'));
+          } else {
+            cb(null);
+          }
+        })
+      },
+      function (cb) {
+        db.collection('user').insertOne({
+          username: name,
+          password: pwd,
+          nickname: nickname,
+          age: age,
+          sex: sex,
+          isAdmin: isAdmin
+        }, function (err) {
+          if (err) {
+            cb(err);
+          } else {
+            cb(null);
+          }
+        })
+      }
+    ], function (err, result) {
+      if (err) {
+        res.render('error', {
+          message: '注册失败',
+          error: err
+        })
+      } else {
+        res.redirect('/login.html');
+      }
+      client.close();
+    })
+
+    // db.collection('user').insertOne({
+    //   username: name,
+    //   password: pwd,
+    //   nickname: nickname,
+    //   age: age,
+    //   sex: sex,
+    //   isAdmin: isAdmin
+    // }, function (err) {
+    //   if (err) {
+    //     console.log('注册失败');
+    //     res.render('error', {
+    //       message: '注册失败',
+    //       error: err
+    //     })
+    //   } else {
+    //     //注册成功 跳转到登录页面·
+    //     res.redirect('/login.html');
+    //   }
+    //   client.close();
+    // })
   })
 })
 
