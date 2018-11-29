@@ -58,7 +58,9 @@
                                     <%= list[i].isAdmin %>
                                 </td>
                                 <td>
+                                    <% if ((!list[i].isAdmin) && list2) { %>
                                     <a href="/users/delete?id=<%= list[i]._id %>">删除</a>
+                                    <% } %>
                                 </td>
                             </tr>
                             <% }%>
@@ -69,20 +71,23 @@
                 <div>
                     <nav aria-label="...">
                         <ul class="pagination">
-                            <li class="disabled">
-                                <span>
-                                    <span aria-hidden="true">&laquo;</span>
-                                </span>
-                            </li>
-                            <li class="active">
-                                <span>1 <span class="sr-only">(current)</span></span>
-                            </li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
                             <li>
-                                <a href="#" aria-label="Next">
+                                <a href="/users?page=<%= currentPage - 1 < 1 ? 1 : currentPage-1 %>&pageSize=<%= pageSize %>"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <% for (var i = 0; i < totalPage; i++) { %>
+                            <li class="<%= currentPage === (i+1) ? 'active' : '' %>">
+                                <a href="/users?page=<%= i+1 %>&pageSize=<%= pageSize %>">
+                                    <%= i+1 %>
+                                </a>
+                            </li>
+                            <% } %>
+
+                            <li>
+                                <a href="/users?page=<%= currentPage + 1 > totalPage ? totalPage : currentPage + 1 %>&pageSize=<%= pageSize %>"
+                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
