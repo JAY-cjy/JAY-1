@@ -6,6 +6,7 @@ var async = require('async');
 var router = express.Router();
 var url = 'mongodb://127.0.0.1:27017';
 
+
 //location:3000/users
 router.get('/', function (req, res, next) {
   var page = parseInt(req.query.page) || 1;//页码
@@ -68,7 +69,6 @@ router.get('/', function (req, res, next) {
             totalPage: totalPage,
             pageSize: pageSize,
             currentPage: page,
-            list2: true
           });
         } else {
           res.render('users', {
@@ -77,17 +77,12 @@ router.get('/', function (req, res, next) {
             totalPage: totalPage,
             pageSize: pageSize,
             currentPage: page,
-            list2: false
           });
         }
 
       }
     })
   })
-
-
-
-
 
   // MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
   //   if (err) {
@@ -121,12 +116,10 @@ router.get('/', function (req, res, next) {
   //       if (isAdmin == 1) {
   //         res.render('users', {
   //           list: data,
-  //           list2: true
   //         });
   //       } else {
   //         res.render('users', {
   //           list: data,
-  //           list2: false
   //         });
   //       }
   //     }
@@ -194,24 +187,25 @@ router.post('/login', function (req, res) {
         })
       } else {
         //找到数据，登陆成功-跳转到首页
-        if (data[0].isAdmin == true) {
-          res.cookie('nickname', data[0].nickname, {
-            maxAge: 60 * 60 * 1000
-          });
-          res.cookie('isAdmin', 1, {
-            maxAge: 60 * 60 * 1000
-          });
-        } else {
-          res.cookie('nickname', data[0].nickname, {
-            maxAge: 60 * 60 * 1000
-          });
-          res.cookie('isAdmin', '', {
-            maxAge: 60 * 60 * 1000
-          });
-        }
+        // if (data[0].isAdmin == true) {
+        res.cookie('nickname', data[0].nickname, {
+          maxAge: 60 * 60 * 1000
+        });
+        res.cookie('isAdmin', data[0].isAdmin, {
+          maxAge: 60 * 60 * 1000
+        });
+        // } else {
+        //   res.cookie('nickname', data[0].nickname, {
+        //     maxAge: 60 * 60 * 1000
+        //   });
+        //   res.cookie('isAdmin', '', {
+        //     maxAge: 60 * 60 * 1000
+        //   });
+        // }
         //设置nickname，maxAge是cookie存在时间(时间毫秒数)
         //res.render('index')不会改变页面地址,所以用redirect重定向
         res.redirect('/');//res.redirect('http://localhost:3000/')主页
+        // res.redirect('/?' + 'isAdmin=' + data[0].isAdmin + '&nickname=' + data[0].nickname);
       }
       client.close();
     })

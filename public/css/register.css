@@ -1,0 +1,25 @@
+html, body {
+  background-color: #ccc; }
+
+.box {
+  margin: 100px auto 0;
+  background-color: pink;
+  width: 400px;
+  height: 450px; }
+  .box h1 {
+    font-size: 26px;
+    text-align: center;
+    margin: 20px 0 30px;
+    font-weight: 600; }
+  .box label {
+    display: block;
+    text-align: center;
+    margin: 20px auto; }
+  .box .zc {
+    display: block;
+    text-align: center;
+    margin: 30px auto; }
+  .box a {
+    display: block;
+    text-align: center;
+    margin: -5px auto; }

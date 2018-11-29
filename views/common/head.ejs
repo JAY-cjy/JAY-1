@@ -1,9 +1,14 @@
 <div class="jay-head">
     <div class="left">
-        <a href="/" class="logo">xx后台管理系统</a>
+        <a href="/" class="logo" id="logo">xx后台管理系统</a>
     </div>
     <div class="right">
-        <p>欢迎您，xxx(管理员)</p>
-        <button class="btn btn-primary">退出</button>
+        <p id="sss"></p>
+        <a href="/login.html"><button class="btn btn-primary">退出</button></a>
     </div>
 </div>
+<script>
+    var temp = location.search;
+    var pp = document.getElementById("logo");
+    pp.href = "/brand.html/" + temp;
+</script>

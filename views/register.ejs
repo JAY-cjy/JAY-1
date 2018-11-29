@@ -10,41 +10,45 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/register.css">
 </head>
 
 <body>
     <div class="container">
-        <form action="/users/register" method="post">
-            <label>
-                <span>用户名:</span>
-                <input type="text" name="name" placeholder="请输入用户名">
-            </label>
-            <label>
-                <span>密码:</span>
-                <input type="password" name="pwd" placeholder="请输入密码">
-            </label>
-            <label>
-                <span>昵称:</span>
-                <input type="text" name="nickname" placeholder="请输入昵称">
-            </label>
-            <label>
-                <span>年龄:</span>
-                <input type="text" name="age" placeholder="请输入年龄">
-            </label>
-            <label>
-                <span>性别:</span>
-                <input type="radio" name="sex" value="男" checked>男
-                <input type="radio" name="sex" value="女">女
-            </label>
-            <label>
-                <span>管理员:</span>
-                <input type="radio" name="isAdmin" value="是" checked>是
-                <input type="radio" name="isAdmin" value="否">否
-            </label>
-            <input type="submit" value="注册">
+        <div class="box">
+            <form action="/users/register" method="post">
+                <h1>用户注册</h1>
+                <label>
+                    <span>用户名:</span>
+                    <input type="text" name="name" placeholder="请输入用户名">
+                </label>
+                <label>
+                    <span>密&emsp;码:</span>
+                    <input type="password" name="pwd" placeholder="请输入密码">
+                </label>
+                <label>
+                    <span>昵&emsp;称:</span>
+                    <input type="text" name="nickname" placeholder="请输入昵称">
+                </label>
+                <label>
+                    <span>年&emsp;龄:</span>
+                    <input type="text" name="age" placeholder="请输入年龄">
+                </label>
+                <label>
+                    <span>性&emsp;别:</span>
+                    <input type="radio" name="sex" value="男" checked>男
+                    <input type="radio" name="sex" value="女">女
+                </label>
+                <label>
+                    <span>管理员:</span>
+                    <input type="radio" name="isAdmin" value="是" checked>是
+                    <input type="radio" name="isAdmin" value="否">否
+                </label>
+                <input class="zc" type="submit" value="注册">
 
-            <a href="/login.html">已有账号，点此立即登录</a>
-        </form>
+                <a href="/login.html">已有账号，点此立即登录</a>
+            </form>
+        </div>
     </div>
 </body>
 

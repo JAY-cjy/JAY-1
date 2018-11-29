@@ -10,22 +10,26 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 
 <body>
     <div class="container">
-        <form action="/users/login" method="post">
-            <label>
-                <span>用户名:</span>
-                <input type="text" name="name" placeholder="请输入用户名">
-            </label>
-            <label>
-                <span>密码:</span>
-                <input type="password" name="pwd" placeholder="请输入密码">
-            </label>
-            <input type="submit" value="登录">
-            <a href="/register.html">立即注册</a>
-        </form>
+        <div class="box">
+            <h1>用户登录</h1>
+            <form action="/users/login" method="post">
+                <label>
+                    <span>用户名:</span>
+                    <input type="text" name="name" placeholder="请输入用户名">
+                </label>
+                <label>
+                    <span>密&emsp;码:</span>
+                    <input type="password" name="pwd" placeholder="请输入密码">
+                </label>
+                <input class="dl" type="submit" value="登录">
+                <a href="/register.html">没有账号？点此立即注册</a>
+            </form>
+        </div>
     </div>
 </body>
 

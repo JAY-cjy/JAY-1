@@ -1,0 +1,32 @@
+html,body{
+    background-color:#ccc;
+}
+
+.box{
+    margin:100px auto 0;
+    // border:1px solid white;
+    background-color:pink;
+    width:300px;
+    height:300px;
+    h1{
+        font-size:26px;
+        text-align:center;
+        margin:20px 0 30px;
+        font-weight:600;
+    }
+    label{
+        display:block;
+        text-align:center;
+        margin:20px auto; 
+    }
+    .dl{
+        display:block;
+        text-align:center;
+         margin:30px auto; 
+    }
+    a{
+        display:block;
+        text-align:center;
+         margin:-5px auto; 
+    }
+}

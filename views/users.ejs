@@ -58,7 +58,7 @@
                                     <%= list[i].isAdmin %>
                                 </td>
                                 <td>
-                                    <% if ((!list[i].isAdmin) && list2) { %>
+                                    <% if (!list[i].isAdmin) { %>
                                     <a href="/users/delete?id=<%= list[i]._id %>">删除</a>
                                     <% } %>
                                 </td>

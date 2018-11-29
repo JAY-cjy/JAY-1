@@ -3,7 +3,11 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  var temp = req.query.isAdmin;
+  res.render('index', {
+    temp: temp
+  });
+  console.log(temp)
 });
 
 router.get('/login.html', function (req, res) {
