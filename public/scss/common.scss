@@ -1,10 +1,15 @@
 /*共用样式 */
 html,body{
     height:100%;
+    background-color:#ccc;
+    background-image:url(../images/1.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
-body{
-    background:pink;
-}
+
+// body{
+//     background:pink;
+// }
 
 .container{
     display:flex;
