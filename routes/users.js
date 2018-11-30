@@ -54,81 +54,18 @@ router.get('/', function (req, res, next) {
         })
       } else {
         var totalPage = Math.ceil(totalSize / pageSize);//总页数
-        // res.render('users', {
-        //   list: results[1],
-        //   //totalSize: totalSize,
-        //   totalPage: totalPage,
-        //   pageSize: pageSize,
-        //   currentPage: page
-        // })
-        var isAdmin = req.cookies.isAdmin;
-        if (isAdmin == 1) {
-          res.render('users', {
-            list: results[1],
-            //totalSize: totalSize,
-            totalPage: totalPage,
-            pageSize: pageSize,
-            currentPage: page,
-          });
-        } else {
-          res.render('users', {
-            list: results[1],
-            //totalSize: totalSize,
-            totalPage: totalPage,
-            pageSize: pageSize,
-            currentPage: page,
-          });
-        }
 
+        res.render('users', {
+          list: results[1],
+          //totalSize: totalSize,
+          totalPage: totalPage,
+          pageSize: pageSize,
+          currentPage: page,
+        });
       }
+      client.close(); //关闭数据库的链接
     })
   })
-
-  // MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
-  //   if (err) {
-  //     //连接数据库失败
-  //     console.log('连接数据库失败', err);
-  //     res.render('error', {
-  //       message: '连接数据库失败',
-  //       error: err
-  //     });
-  //     return;
-  //   }
-
-  //   var db = client.db('JAY-project');//数据库名字
-
-  //   //user集合名字
-  //   db.collection('user').find().toArray(function (err, data) {
-  //     if (err) {
-  //       console.log('查询用户数据失败', err);
-  //       //有错误就渲染errot.ejs文件
-  //       res.render('error', {
-  //         message: '查询失败',
-  //         error: err
-  //       });
-  //     } else {
-  //       // console.log(data);
-  //       // res.render('users', {
-  //       //   list: data
-  //       // });
-  //       var isAdmin = req.cookies.isAdmin;
-  //       console.log(isAdmin)
-  //       if (isAdmin == 1) {
-  //         res.render('users', {
-  //           list: data,
-  //         });
-  //       } else {
-  //         res.render('users', {
-  //           list: data,
-  //         });
-  //       }
-  //     }
-  //     client.close(); //关闭数据库的链接
-  //   });
-  // });
-  // res.render('users'); 
-  //这里不能写了，因为mongodb的操作时异步操作，
-  //写这个可能会出现这先运行的可能，然后其他的就停止了
 });
 
 
@@ -194,18 +131,9 @@ router.post('/login', function (req, res) {
         res.cookie('isAdmin', data[0].isAdmin, {
           maxAge: 60 * 60 * 1000
         });
-        // } else {
-        //   res.cookie('nickname', data[0].nickname, {
-        //     maxAge: 60 * 60 * 1000
-        //   });
-        //   res.cookie('isAdmin', '', {
-        //     maxAge: 60 * 60 * 1000
-        //   });
-        // }
         //设置nickname，maxAge是cookie存在时间(时间毫秒数)
         //res.render('index')不会改变页面地址,所以用redirect重定向
         res.redirect('/');//res.redirect('http://localhost:3000/')主页
-        // res.redirect('/?' + 'isAdmin=' + data[0].isAdmin + '&nickname=' + data[0].nickname);
       }
       client.close();
     })
@@ -311,6 +239,74 @@ router.get('/delete', function (req, res) {
         res.redirect('/users')
       }
       client.close();
+    })
+  })
+})
+
+
+
+//搜索操作 localhost:3000/users/delete
+router.post('/search', function (req, res) {
+  var page = parseInt(req.query.page) || 1;//页码
+  var pageSize = parseInt(req.query.pageSize) || 5;//每页显示的条数
+  var totalSize = 0;//总条数
+  var data = [];
+  var name = req.body.name;
+  var filter = new RegExp(name);
+  //获取搜索框内容
+
+  MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
+    if (err) {
+      res.render('error', {
+        message: '数据库连接失败',
+        error: err
+      })
+      return;
+    }
+    var db = client.db('JAY-project');
+
+    async.series([
+      function (cb) {
+        db.collection('user').find({
+          nickname: filter
+        }).count(function (err, num) {
+          if (err) {
+            cb(err);
+          } else {
+            totalSize = num;
+            cb(null);
+          }
+        })
+      },
+      function (cb) {
+        db.collection('user').find({
+          nickname: filter
+        }).toArray(function (err, data) {
+          if (err) {
+            cb(err);
+          } else {
+            cb(null, data);
+          }
+        })
+      }
+    ], function (err, results) { //results是个数组
+      if (err) {
+        res.render('error', {
+          message: '错误',
+          error: err
+        })
+      } else {
+        var totalPage = Math.ceil(totalSize / pageSize);//总页数
+
+        res.render('users', {
+          list: results[1],
+          //totalSize: totalSize,
+          totalPage: totalPage,
+          pageSize: pageSize,
+          currentPage: page,
+        });
+        client.close(); //关闭数据库的链接
+      }
     })
   })
 })

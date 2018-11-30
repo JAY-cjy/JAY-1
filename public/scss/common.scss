@@ -51,6 +51,9 @@ body{
     .body{
         flex:1;
         padding: 20px 20px;
+        th,td{
+            text-align:center;
+        }
     }
 }
 
@@ -62,6 +65,7 @@ body{
     align-items:center;
     padding:0 30px;
 }
+
 
 
 //以下是对bootstrap的修改
