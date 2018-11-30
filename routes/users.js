@@ -245,7 +245,7 @@ router.get('/delete', function (req, res) {
 
 
 
-//搜索操作 localhost:3000/users/delete
+//搜索操作 localhost:3000/users/search
 router.post('/search', function (req, res) {
   var page = parseInt(req.query.page) || 1;//页码
   var pageSize = parseInt(req.query.pageSize) || 5;//每页显示的条数

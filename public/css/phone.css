@@ -1,0 +1,52 @@
+.box {
+  width: 100px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+.box p {
+  line-height: 30px;
+  text-align: center;
+}
+
+.box2 {
+  background-color: pink;
+  width: 400px;
+  height: 450px;
+  border-radius: 30px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.box2 h1 {
+  font-size: 26px;
+  text-align: center;
+  margin: 20px 0 30px;
+  font-weight: 600;
+}
+.box2 label, .box2 div {
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+}
+.box2 label select, .box2 div select {
+  width: 175px;
+}
+.box2 .qd {
+  margin: 30px auto;
+  width: 80px;
+  height: 40px;
+  background: #169bd5;
+  border-radius: 10px;
+  color: white;
+}
+.box2 a {
+  display: block;
+  text-align: center;
+  margin: -5px auto;
+}

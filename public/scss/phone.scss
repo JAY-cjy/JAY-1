@@ -1,0 +1,51 @@
+.box{
+    width:100px;
+    height:30px;
+    border:1px solid black;
+    border-radius: 8px;
+    cursor:pointer;
+    margin:10px 0;
+    p{
+        line-height:30px;
+        text-align:center;
+    }
+}
+.box2{
+    background-color:pink;
+    width:400px;
+    height:450px;
+    border-radius: 30px;
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    margin:auto;
+    h1{
+        font-size:26px;
+        text-align:center;
+        margin:20px 0 30px;
+        font-weight:600;
+    }
+    label,div{
+        display:block;
+        text-align:center;
+        margin:20px auto;
+        select{
+            width:175px;
+        }
+    }
+    .qd{
+        margin:30px auto; 
+        width:80px;
+        height:40px;
+        background: rgba(22, 155, 213, 1);
+        border-radius:10px;
+        color:white;
+    }
+    a{
+        display:block;
+        text-align:center;
+        margin:-5px auto; 
+    }
+}
