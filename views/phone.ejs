@@ -20,12 +20,13 @@
             <%- include('./common/menu')%>
             <div class="body" style="position:relative">
                 手机管理
-                <div class="box">
+                <div class="box" id="box">
                     <p>新增手机</p>
                 </div>
-                <div class="box2">
+                <div class="box2" id="box2" style="display:none;">
                     <h1>新增</h1>
-                    <form action="/phone" method="get">
+
+                    <form action="/phone/insert" method="post">
                         <label>
                             手机名称&emsp;：<input type="text" name="phone">
                         </label>
@@ -49,9 +50,10 @@
                         </label>
                         <div>
                             <input class="qd" type="submit" value="确定">
-                            <input class="qd" type="button" value="取消" style="background:white;color:black;">
+                            <input class="qd" type="button" id="btn-qx" value="取消" style="background:white;color:black;">
                         </div>
                     </form>
+
                 </div>
                 <div>
                     <table class="table table-striped table-bordered table-hover">
@@ -90,8 +92,8 @@
                                     <%= list[i].twoPrice %>
                                 </td>
                                 <td>
-                                    <a href="/users/">修改</a>
-                                    <a href="/users/">删除</a>
+                                    <a href="/phone.html">修改</a>
+                                    <a href="/phone/delete?id=<%= list[i]._id %>">删除</a>
                                 </td>
                             </tr>
                             <% }%>
@@ -103,21 +105,21 @@
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li>
-                                <a href="/users?page=<%= currentPage - 1 < 1 ? 1 : currentPage-1 %>&pageSize=<%= pageSize %>"
+                                <a href="/phone.html?page=<%= currentPage - 1 < 1 ? 1 : currentPage-1 %>&pageSize=<%= pageSize %>"
                                     aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             <% for (var i = 0; i < totalPage; i++) { %>
                             <li class="<%= currentPage === (i+1) ? 'active' : '' %>">
-                                <a href="/users?page=<%= i+1 %>&pageSize=<%= pageSize %>">
+                                <a href="/phone.html?page=<%= i+1 %>&pageSize=<%= pageSize %>">
                                     <%= i+1 %>
                                 </a>
                             </li>
                             <% } %>
 
                             <li>
-                                <a href="/users?page=<%= currentPage + 1 > totalPage ? totalPage : currentPage + 1 %>&pageSize=<%= pageSize %>"
+                                <a href="/phone.html?page=<%= currentPage + 1 > totalPage ? totalPage : currentPage + 1 %>&pageSize=<%= pageSize %>"
                                     aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -133,3 +135,16 @@
 </body>
 
 </html>
+<script>
+    var box = document.getElementById("box");
+    var box2 = document.getElementById("box2");
+    var qx = document.getElementById("btn-qx");
+
+    box.onclick = function () {
+        box2.style.display = "block";
+    }
+
+    qx.onclick = function () {
+        box2.style.display = "none";
+    }
+</script>
