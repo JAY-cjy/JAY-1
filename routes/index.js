@@ -3,7 +3,7 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectId;//获取数据库id
 var async = require('async');
 
-var bodyParser = require("body-parser");
+var bodyParser = require("body-parser");//
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -28,9 +28,9 @@ router.get('/register.html', function (req, res) {
 //   res.render('users');
 // })
 
-router.get('/brand.html', function (req, res) {
-  res.render('brand');
-})
+// router.get('/brand.html', function (req, res) {
+//   res.render('brand');
+// })
 
 // router.get('/phone.html', function (req, res) {
 //   res.render('phone');
@@ -166,6 +166,50 @@ router.get('/phone/delete', function (req, res) {
     })
   })
 })
+
+
+
+//phone修改
+router.post('/phone/update', function (req, res) {
+  var id = req.query.id;
+  var img = req.body.img;
+  var phone = req.body.phone;
+  var brand = req.body.brand;
+  var price = req.body.price;
+  var twoPrice = req.body.twoPrice;
+
+
+  MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
+    if (err) {
+      res.render('error', {
+        message: '连接失败',
+        error: err
+      })
+      return;
+    }
+    var db = client.db('JAY-project');
+    db.collection('phone').save({
+      _id: ObjectId(id),
+      img: '',
+      phone: phone,
+      brand: brand,
+      price: price,
+      twoPrice: twoPrice
+    }, function (err, data) {
+      if (err) {
+        res.render('error', {
+          message: '修改失败',
+          error: err
+        })
+      } else {
+        //修改成功，页面刷新
+        res.redirect('/phone.html')
+      }
+      client.close();
+    })
+  })
+})
+
 
 
 module.exports = router;

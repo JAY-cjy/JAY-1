@@ -92,8 +92,41 @@
                                     <%= list[i].twoPrice %>
                                 </td>
                                 <td>
-                                    <a href="/phone.html">修改</a>
+                                    <a href="javascript:void(0);">修改</a>
                                     <a href="/phone/delete?id=<%= list[i]._id %>">删除</a>
+
+                                    <div class="box3" id="box3" style="display:none">
+                                        <h1>修改</h1>
+
+                                        <form action="/phone/update?id=<%= list[i]._id %>" method="post">
+                                            <label>
+                                                手机名称&emsp;：<input type="text" name="phone" value="<%= list[i].phone %>">
+                                            </label>
+                                            <label>
+                                                所属品牌&emsp;：<select name="brand" id="">
+                                                    <option value="苹果">苹果</option>
+                                                    <option value="小米">小米</option>
+                                                    <option value="三星">三星</option>
+                                                    <option value="华为">华为</option>
+                                                    <option value="魅族">魅族</option>
+                                                </select>
+                                            </label>
+                                            <label>
+                                                官方指导价：<input type="text" name="price" value="<%= list[i].price %>">
+                                            </label>
+                                            <label>
+                                                二手回收价：<input type="text" name="twoPrice" value="<%= list[i].twoPrice %>">
+                                            </label>
+                                            <label>
+                                                图&emsp;&emsp;片:
+                                            </label>
+                                            <div>
+                                                <input class="qd" type="submit" value="确定">
+                                                <input class="qd qx" type="button" id="btn-qx2" value="取消" style="background:white;color:black;">
+                                            </div>
+                                        </form>
+
+                                    </div>
                                 </td>
                             </tr>
                             <% }%>
@@ -138,7 +171,9 @@
 <script>
     var box = document.getElementById("box");
     var box2 = document.getElementById("box2");
+    var box3 = document.getElementById("box3");
     var qx = document.getElementById("btn-qx");
+    var qx2 = document.getElementById("btn-qx2");
 
     box.onclick = function () {
         box2.style.display = "block";
@@ -146,5 +181,28 @@
 
     qx.onclick = function () {
         box2.style.display = "none";
+    }
+
+
+    document.onclick = function (e) {
+        var e = e || event;
+        var target = e.target || e.srcElement;
+        if (target.nodeName.toLowerCase() == "a") {
+            console.log(target.parentNode.lastElementChild)
+            target.parentNode.lastElementChild.style.display = "block";
+            console.log(target.nextElementSibling.href.split("=")[1]);
+        }
+    }
+
+    qx2.onclick = function () {
+        target.parentNode.lastElementChild.style.display = "none";
+    }
+
+    window.onclick = function (e) {
+        var e = e || event;
+        var target = e.target || e.srcElement;
+        if (target.className == "qd qx") {
+            target.parentNode.parentNode.parentNode.style.display = "none";
+        }
     }
 </script>

@@ -5,12 +5,14 @@ html, body {
   background-color: #ccc;
   background-image: url(../images/1.jpg);
   background-repeat: no-repeat;
-  background-size: 100% 100%; }
+  background-size: 100% 100%;
+}
 
 .container {
   display: flex;
   flex-direction: column;
-  height: 100%; }
+  height: 100%;
+}
 
 .jay-head {
   display: flex;
@@ -18,45 +20,57 @@ html, body {
   align-items: center;
   height: 50px;
   border-bottom: 1px solid black;
-  padding: 0 30px; }
-  .jay-head .logo {
-    font-size: 26px;
-    text-decoration: none; }
-  .jay-head .right {
-    display: flex;
-    align-items: center; }
-    .jay-head .right p {
-      margin-right: 5px; }
+  padding: 0 30px;
+}
+.jay-head .logo {
+  font-size: 26px;
+  text-decoration: none;
+}
+.jay-head .right {
+  display: flex;
+  align-items: center;
+}
+.jay-head .right p {
+  margin-right: 5px;
+}
 
 .jay-main {
   flex: 1;
   display: flex;
-  background: white; }
-  .jay-main .jay-menu {
-    width: 250px;
-    height: 100%;
-    border-right: 1px solid black; }
-    .jay-main .jay-menu li {
-      list-style: none;
-      height: 50px;
-      line-height: 50px;
-      border-bottom: 1px solid black;
-      text-align: center; }
-  .jay-main .body {
-    flex: 1;
-    padding: 20px 20px; }
-    .jay-main .body th, .jay-main .body td {
-      text-align: center; }
+  background: white;
+}
+.jay-main .jay-menu {
+  width: 250px;
+  height: 100%;
+  border-right: 1px solid black;
+}
+.jay-main .jay-menu li {
+  list-style: none;
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+.jay-main .body {
+  flex: 1;
+  padding: 20px 20px;
+}
+.jay-main .body th, .jay-main .body td {
+  text-align: center;
+}
 
 .jay-foot {
   height: 50px;
   border-top: 1px solid black;
   display: flex;
   align-items: center;
-  padding: 0 30px; }
+  padding: 0 30px;
+}
 
 .table-hover > tbody > tr:hover {
-  background-color: #05f31f; }
+  background-color: #05f31f;
+}
 
 .pagination {
-  float: right; }
+  float: right;
+}
