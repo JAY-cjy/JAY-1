@@ -50,6 +50,9 @@
   text-align: center;
   margin: -5px auto;
 }
+.box2 img {
+  width: 50px;
+}
 
 .box3 {
   background-color: pink;
@@ -89,4 +92,7 @@
   display: block;
   text-align: center;
   margin: -5px auto;
+}
+.box3 img {
+  width: 50px;
 }

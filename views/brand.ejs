@@ -173,10 +173,8 @@
     document.onclick = function (e) {
         var e = e || event;
         var target = e.target || e.srcElement;
-        if (target.nodeName.toLowerCase() == "a") {
-            console.log(target.parentNode.lastElementChild)
+        if (target.className == "qd") {
             target.parentNode.lastElementChild.style.display = "block";
-            console.log(target.nextElementSibling.href.split("=")[1]);
         }
     }
 

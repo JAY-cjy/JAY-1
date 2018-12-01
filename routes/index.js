@@ -2,10 +2,16 @@ var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectId;//获取数据库id
 var async = require('async');
+var multer = require('multer');
+var fs = require('fs');
+var path = require('path');
 
 var bodyParser = require("body-parser");//
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
+
+//dest是设置文件的临时目录
+var upload = multer({ dest: 'D:/tmp' })
 
 var router = express.Router();
 var url = 'mongodb://127.0.0.1:27017';
@@ -98,41 +104,57 @@ router.get('/phone.html', function (req, res, next) {
 
 
 //phone页面新增信息到数据库
-router.post('/phone/insert', function (req, res) {
-  var img = '';
+router.post('/phone/insert', upload.single('file'), function (req, res) {
+  var filename = 'phoneImg/' + new Date().getTime() + '_' + req.file.originalname;
+  console.log(filename);
+  var newFileName = path.resolve(__dirname, '../public/', filename);
+  console.log(newFileName);
+
+  var img = filename;
   var phone = req.body.phone;
   var brand = req.body.brand;
   var price = req.body.price;
   var twoPrice = req.body.twoPrice;
 
-  MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
-    if (err) {
-      res.render('error', {
-        message: '连接失败',
-        error: err
-      })
-      return;
-    }
-    var db = client.db('JAY-project');
-    db.collection('phone').insertOne({
-      img: img,
-      phone: phone,
-      brand: brand,
-      price: price,
-      twoPrice: twoPrice
-    }, function (err, data) {
+  try {
+    var data = fs.readFileSync(req.file.path);
+    fs.writeFileSync(newFileName, data);
+    console.log(2);
+
+    MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
       if (err) {
         res.render('error', {
-          message: '添加失败',
+          message: '连接失败',
           error: err
         })
-      } else {
-        //添加成功，页面刷新
-        res.redirect('/phone.html')
+        return;
       }
-      client.close();
+      var db = client.db('JAY-project');
+      db.collection('phone').insertOne({
+        img: img,
+        phone: phone,
+        brand: brand,
+        price: price,
+        twoPrice: twoPrice
+      }, function (err, data) {
+        if (err) {
+          res.render('error', {
+            message: '添加失败',
+            error: err
+          })
+        } else {
+          //添加成功，页面刷新
+          res.redirect('/phone.html')
+        }
+        client.close();
+      })
     })
-  })
+  } catch (error) {
+    res.render('error', {
+      message: '新增失败',
+      error: new Error('失败')
+    })
+  }
 })
 
 

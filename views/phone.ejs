@@ -26,7 +26,7 @@
                 <div class="box2" id="box2" style="display:none;">
                     <h1>新增</h1>
 
-                    <form action="/phone/insert" method="post">
+                    <form action="/phone/insert" method="post" enctype="multipart/form-data">
                         <label>
                             手机名称&emsp;：<input type="text" name="phone">
                         </label>
@@ -46,7 +46,7 @@
                             二手回收价：<input type="text" name="twoPrice">
                         </label>
                         <label>
-                            图&emsp;&emsp;片:
+                            图片:&emsp; <input type="file" name="file" style="width:220px;display:inline-block;">
                         </label>
                         <div>
                             <input class="qd" type="submit" value="确定">
@@ -75,7 +75,7 @@
                                     <%= i+1 %>
                                 </th>
                                 <td>
-                                    <%= list[i].img %>
+                                    <img src="<%= list[i].img %>" alt="" style="width:31px;">
                                 </td>
                                 <td>
                                     <%= list[i].phone %>
@@ -92,15 +92,15 @@
                                     <%= list[i].twoPrice %>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0);">修改</a>
+                                    <a href="javascript:void(0);" class="xg">修改</a>
                                     <a href="/phone/delete?id=<%= list[i]._id %>">删除</a>
 
                                     <div class="box3" id="box3" style="display:none">
                                         <h1>修改</h1>
 
-                                        <form action="/phone/update?id=<%= list[i]._id %>" method="post">
+                                        <form action="/phone/insert" method="post" enctype="multipart/form-data">
                                             <label>
-                                                手机名称&emsp;：<input type="text" name="phone" value="<%= list[i].phone %>">
+                                                手机名称&emsp;：<input type="text" name="phone">
                                             </label>
                                             <label>
                                                 所属品牌&emsp;：<select name="brand" id="">
@@ -112,13 +112,13 @@
                                                 </select>
                                             </label>
                                             <label>
-                                                官方指导价：<input type="text" name="price" value="<%= list[i].price %>">
+                                                官方指导价：<input type="text" name="price">
                                             </label>
                                             <label>
-                                                二手回收价：<input type="text" name="twoPrice" value="<%= list[i].twoPrice %>">
+                                                二手回收价：<input type="text" name="twoPrice">
                                             </label>
                                             <label>
-                                                图&emsp;&emsp;片:
+                                                图片:&emsp; <input type="file" name="file" style="width:220px;display:inline-block;">
                                             </label>
                                             <div>
                                                 <input class="qd" type="submit" value="确定">
@@ -187,15 +187,9 @@
     document.onclick = function (e) {
         var e = e || event;
         var target = e.target || e.srcElement;
-        if (target.nodeName.toLowerCase() == "a") {
-            console.log(target.parentNode.lastElementChild)
+        if (target.className == "xg") {
             target.parentNode.lastElementChild.style.display = "block";
-            console.log(target.nextElementSibling.href.split("=")[1]);
         }
-    }
-
-    qx2.onclick = function () {
-        target.parentNode.lastElementChild.style.display = "none";
     }
 
     window.onclick = function (e) {
